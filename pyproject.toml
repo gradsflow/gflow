@@ -44,4 +44,4 @@ test = [
 profile = "black"
 
 [tool.flit.scripts]
-chitra = "gflow_cli.main:app"
+gflow-cli = "gflow_cli.main:app"
