@@ -1,8 +1,8 @@
-site_name: chitra
-site_description: "chitra (चित्र) is a Deep Learning library for Model Building, Explainable AI, Data Visualization, API Building & Deployment."
+site_name: GradsFlow Codeless AI CLI
+site_description: "GradsFlow Codeless AI CLI"
 banner_url: https://ik.imagekit.io/aniket/chitra/chitra_banner_0.1.0_tIzHC3b-y.png
-repo_url: https://github.com/aniketmaurya/chitra/
-repo_name: aniketmaurya/chitra
+repo_url: https://github.com/gradsflow/cli/
+repo_name: gradsflow/cli
 
 theme:
   name: material
@@ -40,15 +40,9 @@ plugins:
   - search
 
 extra:
-  homepage: https://chitra.readthedocs.io/en/latest
+  homepage: https://gradsflow-cli.readthedocs.io/en/latest
   nbs_image:
     base_url: https://raw.githubusercontent.com/aniketmaurya/chitra/master/docs/assets/images
 
 nav:
   - Introduction: 'index.md'
-  - Image & Bounding Boxes: 'source/api/image/chitra-class.md'
-  - Serve: 'source/api/serve/model_server.md'
-  - Visualization: 'source/api/visualization/metrics.md'
-  - Examples:
-      - Image Classification: 'examples/image-classification/image-classification.md'
-      - Model Server: 'examples/model-server/model-server.md'
