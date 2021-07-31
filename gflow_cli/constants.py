@@ -13,3 +13,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 KEYRING_NAME = "GRADSFLOW_CLI"
+BASE_URL = "https://dev-api.gradsflow.com/backend"
+
+DATASETS_URL = f"{BASE_URL}/datasets"
