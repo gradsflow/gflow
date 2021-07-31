@@ -1,12 +1,12 @@
 # CLI
 
-CLI for accessing GradsFlow Code Less AI Engine.
+CLI for accessing GradsFlow Codeless AI Engine.
 
 ## 📀 Installation
 
 [comment]: <> (### Using pip &#40;recommended&#41;)
 
-[comment]: <> (`pip install -U gflow_cli==0.1.0`)
+[comment]: <> (`pip install -U gflow_cli==0.1.0a0`)
 
 ### From source
 
