@@ -23,3 +23,27 @@ pip install git+https://github.com/gradsflow/cli@master
 cd cli
 pip install .
 ```
+
+## 🧑‍💻 Usage
+
+### Manage Datasets
+
+#### Add Dataset
+
+```
+  Usage: gflow dataset add [OPTIONS] PATH TASK DATASET_TYPE REMOTE
+
+  Add Training Dataset
+  Args:
+      path: Path of dataset on your local filesystem
+      task: Type of Task/Model you want to train with this
+      dataset. See available tasks `gflow-cli datasets available-tasks`
+      dataset_type: `from-folder` or `from-csv`
+      remote: if true then dataset will be saved to GradsFlow server
+
+Arguments:
+  PATH          [required]
+  TASK          [required]
+  DATASET_TYPE  [required]
+  REMOTE        [required]
+```
