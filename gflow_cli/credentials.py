@@ -12,10 +12,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import keyring
 import typer
 
-from gflow_cli import credentials, info, short_license
+from gflow_cli.constants import KEYRING_NAME
 
-app = typer.Typer(name="gflow_cli", help=short_license)
-app.add_typer(credentials.app, name="user")
-app.add_typer(info.app, name="info")
+app = typer.Typer()
+
+
+@app.command(help="enter username followed by password")
+def login(username: str, password: str):
+    # TODO add validation here
+    keyring.set_password(KEYRING_NAME, username, password)
+    typer.echo(f"Password saver for user {username} 🔐")
