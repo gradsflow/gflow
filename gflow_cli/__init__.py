@@ -36,8 +36,8 @@ long_license = """
     """
 
 short_license = """
-    GradsFlow CLI  Copyright (C) 2021  GradsFlow Team
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `gflow-cli info license_info'.
+    GradsFlow CLI  Copyright (C) 2021  GradsFlow Team.
+    This program comes with ABSOLUTELY NO WARRANTY; for details type `gflow-cli info license'.
     This is free software, and you are welcome to redistribute it
-    under certain conditions; type `gflow-cli info license_info' for details.
+    under certain conditions; type `gflow-cli info license' for details.
     """
