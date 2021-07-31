@@ -13,7 +13,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from dataclasses import asdict, dataclass
-from typing import Tuple
 
 import requests
 import typer
@@ -43,22 +42,20 @@ def get_available_tasks() -> None:
 @app.command(name="add")
 def add_dataset(
     path: str,
-    task: str,
-    dataset_type: str,
-    remote: bool,
+    remote: bool = False,
 ) -> None:
     """
     Add Training Dataset
     Args:
         path: Path of dataset on your local filesystem
-        task: Type of Task/Model you want to train with this dataset.
-        See available tasks `gflow-cli datasets available-tasks`
-        dataset_type: `from-folder` or `from-csv`
         remote: if true then dataset will be saved to GradsFlow server
 
     Returns:
 
     """
+    task = typer.prompt("What is the Task type?", type=str)
+    dataset_type = typer.prompt("What is the dataset type?", type=str)
+
     data = DatasetRequest(
         path=path, task=task, dataset_type=dataset_type, remote=remote
     )
@@ -66,5 +63,5 @@ def add_dataset(
     if response:
         typer.echo("✅ Dataset Created")
     else:
-        typer.echo("🛑 Error While creating Dataset\n")
+        typer.secho("🛑 Error While creating Dataset\n", fg=typer.colors.RED)
         typer.echo(f"status code = {response.status_code}")

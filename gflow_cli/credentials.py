@@ -21,7 +21,9 @@ app = typer.Typer()
 
 
 @app.command(help="enter username followed by password")
-def login(username: str, password: str):
+def login():
+    username: str = typer.prompt("Enter Username")
+    password: str = typer.prompt("Enter Password", hide_input=True)
     # TODO add validation here
     keyring.set_password(KEYRING_NAME, username, password)
     typer.echo(f"Password saver for user {username} 🔐")
