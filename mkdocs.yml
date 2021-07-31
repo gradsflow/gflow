@@ -1,6 +1,6 @@
-site_name: GradsFlow Codeless AI CLI
-site_description: "GradsFlow Codeless AI CLI"
-banner_url: https://ik.imagekit.io/aniket/chitra/chitra_banner_0.1.0_tIzHC3b-y.png
+site_name: GradsFlow CLI
+site_description: "GradsFlow Codeless Machine Learning"
+banner_url: https://ik.imagekit.io/gradsflow/logo/logo_sA2Al0_Ph6Cc.png
 repo_url: https://github.com/gradsflow/cli/
 repo_name: gradsflow/cli
 
@@ -17,8 +17,8 @@ theme:
         icon: material/toggle-switch
         name: Switch to light mode
 
-  logo: https://ik.imagekit.io/aniket/chitra/logo_0.1.0_qhktxqokb.png
-  favicon: https://ik.imagekit.io/aniket/chitra/favicon/favicon_9A8ixLDnJ.ico
+  logo: https://ik.imagekit.io/gradsflow/logo/logo-small_g2MxLWesD.png?updatedAt=1627716948296
+  favicon: https://ik.imagekit.io/gradsflow/favicon/favicon_7lEXKqKWxlD.ico
   features:
     - search.suggest
     - search.highlight
@@ -41,8 +41,6 @@ plugins:
 
 extra:
   homepage: https://gradsflow-cli.readthedocs.io/en/latest
-  nbs_image:
-    base_url: https://raw.githubusercontent.com/aniketmaurya/chitra/master/docs/assets/images
 
 nav:
   - Introduction: 'index.md'
