@@ -32,16 +32,21 @@ class DatasetRequest:
     path: str
     task: str
     dataset_type: str
-    storage: str
+    remote: bool
 
 
 @app.command(name="available-tasks")
-def get_available_tasks() -> Tuple[str]:
-    return AVAILABLE_TASKS
+def get_available_tasks() -> None:
+    typer.echo(AVAILABLE_TASKS)
 
 
-@app.command()
-def add_dataset(path: str, task: str, dataset_type: str, storage: str) -> None:
+@app.command(name="add")
+def add_dataset(
+    path: str,
+    task: str,
+    dataset_type: str,
+    remote: bool,
+) -> None:
     """
     Add Training Dataset
     Args:
@@ -49,13 +54,13 @@ def add_dataset(path: str, task: str, dataset_type: str, storage: str) -> None:
         task: Type of Task/Model you want to train with this dataset.
         See available tasks `gflow-cli datasets available-tasks`
         dataset_type: `from-folder` or `from-csv`
-        storage: Either `local` or `remote`
+        remote: if true then dataset will be saved to GradsFlow server
 
     Returns:
 
     """
     data = DatasetRequest(
-        path=path, task=task, dataset_type=dataset_type, storage=storage
+        path=path, task=task, dataset_type=dataset_type, remote=remote
     )
     response = requests.post(DATASETS_URL, asdict(data))
     if response:
