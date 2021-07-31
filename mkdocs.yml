@@ -1,0 +1,54 @@
+site_name: chitra
+site_description: "chitra (चित्र) is a Deep Learning library for Model Building, Explainable AI, Data Visualization, API Building & Deployment."
+banner_url: https://ik.imagekit.io/aniket/chitra/chitra_banner_0.1.0_tIzHC3b-y.png
+repo_url: https://github.com/aniketmaurya/chitra/
+repo_name: aniketmaurya/chitra
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+  logo: https://ik.imagekit.io/aniket/chitra/logo_0.1.0_qhktxqokb.png
+  favicon: https://ik.imagekit.io/aniket/chitra/favicon/favicon_9A8ixLDnJ.ico
+  features:
+    - search.suggest
+    - search.highlight
+
+  # Necessary for search to work properly
+  include_search_page: false
+  search_index_only: true
+
+markdown_extensions:
+  - meta
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+plugins:
+  - git-revision-date-localized
+  - search
+
+extra:
+  homepage: https://chitra.readthedocs.io/en/latest
+  nbs_image:
+    base_url: https://raw.githubusercontent.com/aniketmaurya/chitra/master/docs/assets/images
+
+nav:
+  - Introduction: 'index.md'
+  - Image & Bounding Boxes: 'source/api/image/chitra-class.md'
+  - Serve: 'source/api/serve/model_server.md'
+  - Visualization: 'source/api/visualization/metrics.md'
+  - Examples:
+      - Image Classification: 'examples/image-classification/image-classification.md'
+      - Model Server: 'examples/model-server/model-server.md'
