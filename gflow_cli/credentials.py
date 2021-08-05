@@ -13,9 +13,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import keyring
+import requests
 import typer
 
-from gflow_cli.constants import KEYRING_NAME
+from gflow_cli.constants import KEYRING_NAME, USER_URL
 
 app = typer.Typer()
 
@@ -24,6 +25,10 @@ app = typer.Typer()
 def login():
     username: str = typer.prompt("Enter Username")
     password: str = typer.prompt("Enter Password", hide_input=True)
-    # TODO add validation here
-    keyring.set_password(KEYRING_NAME, username, password)
-    typer.echo(f"Password saver for user {username} 🔐")
+
+    response = requests.post(USER_URL, data={"email": username, "password": password})
+    if response:
+        keyring.set_password(KEYRING_NAME, username, password)
+        typer.secho(f"Authentication successful {username} 🔐", fg=typer.colors.GREEN)
+    else:
+        typer.secho(response.text, fg=typer.colors.RED)

@@ -12,7 +12,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-KEYRING_NAME = "GRADSFLOW_CLI"
-BASE_URL = "https://dev-api.gradsflow.com/backend"
+import os
 
-DATASETS_URL = f"{BASE_URL}/datasets"
+KEYRING_NAME = "GRADSFLOW_CLI"
+BASE_URL = os.environ.get("GFLOW_BASE_URL", "http://localhost:4000/api")
+
+DATASETS_URL = f"{BASE_URL}/dataset"
+USER_URL = f"{BASE_URL}/auth"
