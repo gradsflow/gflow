@@ -11,14 +11,24 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from pydantic import BaseModel
 
-import typer
 
-from gflow_cli import credentials, datasets, info, projects, short_license
+def to_camel(string: str) -> str:
+    split_string = string.split("_")
+    return split_string[0] + "".join(word.capitalize() for word in split_string[1:])
 
-app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
 
-app.add_typer(credentials.app, name="user")
-app.add_typer(info.app, name="info")
-app.add_typer(datasets.app, name="dataset")
-app.add_typer(projects.app, name="project")
+class BaseBackendModel(BaseModel):
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
+
+
+class ProjectModel(BaseBackendModel):
+    title: str
+    description: str
+    task_id: int
+    type_id: int
+    visibility_id: int
+    team_id: int
