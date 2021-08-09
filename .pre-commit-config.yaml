@@ -16,7 +16,7 @@ repos:
         files: gflow_cli
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.9.2
+    rev: 5.9.3
     hooks:
       - id: isort
         name: "Sort Imports"
