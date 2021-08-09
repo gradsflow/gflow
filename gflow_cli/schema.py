@@ -26,7 +26,7 @@ class BaseBackendModel(BaseModel):
 
 
 class ProjectModel(BaseBackendModel):
-    title: str
+    tittle: str
     description: str
     task_id: int
     type_id: int

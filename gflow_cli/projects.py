@@ -16,11 +16,12 @@ from dataclasses import asdict
 
 import requests
 import typer
+from loguru import logger
 
 from gflow_cli.constants import PROJECTS_URL
 from gflow_cli.utility import read_config
 
-app = typer.Typer(help="Manage your Projects with `gflow-cli project` command.")
+app = typer.Typer(help="Manage your Projects with gflow-cli project command.")
 
 from gflow_cli.schema import ProjectModel
 
@@ -39,7 +40,7 @@ def add_project() -> None:
     team_id = 4
 
     data = ProjectModel(
-        title=title,
+        tittle=title,
         description=desc,
         task_id=task_id,
         type_id=type_id,
@@ -48,10 +49,13 @@ def add_project() -> None:
     )
     typer.echo("project url is " + PROJECTS_URL)
     headers = {"x-auth-token": config["token"]}
-    typer.echo(data.json())
-    response = requests.post(PROJECTS_URL + "/create", data.json(), headers=headers)
+    typer.echo(data.dict(by_alias=True))
+    response = requests.post(
+        PROJECTS_URL + "/create", data=data.dict(by_alias=True), headers=headers
+    )
     if response:
-        typer.echo("✅ Project Created")
+        typer.secho("✅ Project Created", color=typer.colors.GREEN)
+        logger.debug(response.json())
     else:
-        typer.secho("🛑 Error While creating Project\n", fg=typer.colors.RED)
+        typer.secho("🛑 Error While creating Project\n", color=typer.colors.RED)
         typer.echo(response.text)
