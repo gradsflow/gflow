@@ -16,7 +16,7 @@ import typer
 from typer.testing import CliRunner
 
 from gflow_cli import __version__, long_license
-from gflow_cli.main import license, version
+from gflow_cli.info import license_info, version
 
 runner = CliRunner()
 
@@ -31,7 +31,7 @@ def test_version():
 
 def test_version():
     app = typer.Typer()
-    app.command()(license)
+    app.command()(license_info)
     result = runner.invoke(app)
     assert result.exit_code == 0
     assert long_license in result.stdout
