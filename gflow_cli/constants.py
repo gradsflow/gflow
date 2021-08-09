@@ -17,7 +17,7 @@ from pathlib import Path
 
 KEYRING_NAME = "GRADSFLOW_CLI"
 DEFAULT_ADDR = os.environ.get("DEFAULT_ADDR")
-BASE_URL = f"http://{DEFAULT_ADDR}/api"
+BASE_URL = f"{DEFAULT_ADDR}/api"
 
 DATASETS_URL = f"{BASE_URL}/dataset"
 PROJECTS_URL = f"{BASE_URL}/project"
