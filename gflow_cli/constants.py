@@ -13,9 +13,14 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
+from pathlib import Path
 
 KEYRING_NAME = "GRADSFLOW_CLI"
-BASE_URL = os.environ.get("GFLOW_BASE_URL", "http://localhost:4000/api")
+DEFAULT_ADDR = os.environ.get("DEFAULT_ADDR", "35.224.113.159:4000")
+BASE_URL = f"http://{DEFAULT_ADDR}/api"
 
 DATASETS_URL = f"{BASE_URL}/dataset"
 USER_URL = f"{BASE_URL}/auth"
+
+CONFIG_DIR = Path.home() / ".gradsflow"
+CONFIG_PATH = CONFIG_DIR / "config.json"

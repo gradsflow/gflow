@@ -17,18 +17,21 @@ import requests
 import typer
 
 from gflow_cli.constants import KEYRING_NAME, USER_URL
+from gflow_cli.utility import init_config
 
 app = typer.Typer()
 
 
-@app.command(help="enter username followed by password")
+@app.command()
 def login():
-    username: str = typer.prompt("Enter Username")
+    email: str = typer.prompt("Enter Registered Email")
     password: str = typer.prompt("Enter Password", hide_input=True)
 
-    response = requests.post(USER_URL, data={"email": username, "password": password})
+    response = requests.post(USER_URL, data={"email": email, "password": password})
     if response:
-        keyring.set_password(KEYRING_NAME, username, password)
-        typer.secho(f"Authentication successful {username} 🔐", fg=typer.colors.GREEN)
+        keyring.set_password(KEYRING_NAME, email, password)
+        token = response.headers["x-auth-token"]
+        init_config(email, token)
+        typer.secho(f"Authentication successful {email} 🔐", fg=typer.colors.GREEN)
     else:
         typer.secho(response.text, fg=typer.colors.RED)
