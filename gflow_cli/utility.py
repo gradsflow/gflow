@@ -33,7 +33,7 @@ def read_text_file(filepath: str, mode: str = "r"):
 
 
 def init_config(email: str, token: str):
-    os.makedirs(CONFIG_DIR)
+    os.makedirs(CONFIG_DIR, exist_ok=True)
     data = json.dumps(dict(email=email, token=token))
     save_text(data, CONFIG_PATH)
     typer.echo(f"login token saved at {CONFIG_PATH}")
