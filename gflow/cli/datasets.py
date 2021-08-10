@@ -11,19 +11,29 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from unittest.mock import MagicMock, patch
 
-from gflow.cli.credentials import login
-from gflow.utility import cli_test_runner
+from dataclasses import asdict, dataclass
+
+import requests
+import typer
+
+from gflow.constants import DATASETS_URL
+
+app = typer.Typer(help="Manage your datasets with `gflow-cli datasets` command.")
+
+AVAILABLE_STORAGE = ("LOCAL", "REMOTE")
+AVAILABLE_TASKS = ("IMAGE-CLASSIFICATION",)
+AVAILABLE_DATASET_TYPES = ("FROM-FOLDER", "FROM-CSV")
 
 
-@patch("gflow.credentials.keyring.set_password")
-@patch("gflow.credentials.requests.post")
-def test_login(mock_post, mock_save_pwd):
-    mock_response = mock_post.return_value = MagicMock()
-    mock_response.headers = {"x-auth-token": None}
-    mock_post.return_value.text = ""
+@dataclass
+class DatasetRequest:
+    path: str
+    task: str
+    dataset_type: str
+    remote: bool
 
-    result = cli_test_runner(login)(input="hello@abc.com\n12345\n")
 
-    assert "Authentication successful" in result.stdout
+@app.command(name="available-tasks")
+def get_available_tasks() -> None:
+    typer.echo(AVAILABLE_TASKS)

@@ -11,11 +11,6 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#  Copyright (c) 2021 GradsFlow Team.
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -27,16 +22,12 @@
 
 import typer
 
-from gflow_cli import __version__, long_license
+from gflow import short_license
+from gflow.cli import datasets, credentials, projects, info
 
-app = typer.Typer(name="gflow_cli")
+app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
 
-
-@app.command()
-def version():
-    typer.echo(f"Hi there 👋! You're using GradsFlow CLI version={__version__} ✨")
-
-
-@app.command(name="license")
-def license_info():
-    typer.echo(long_license)
+app.add_typer(credentials.app, name="user")
+app.add_typer(info.app, name="info")
+app.add_typer(datasets.app, name="dataset")
+app.add_typer(projects.app, name="project")

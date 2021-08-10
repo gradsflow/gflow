@@ -16,8 +16,8 @@ import keyring
 import requests
 import typer
 
-from gflow_cli.constants import KEYRING_NAME, USER_URL
-from gflow_cli.utility import init_config
+from gflow.constants import KEYRING_NAME, USER_URL
+from gflow.utility import init_config
 
 app = typer.Typer()
 

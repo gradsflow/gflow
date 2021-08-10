@@ -15,7 +15,7 @@
 import typer
 from typer.testing import CliRunner
 
-from gflow_cli.datasets import get_available_tasks
+from gflow.cli.datasets import get_available_tasks
 
 runner = CliRunner()
 

@@ -15,8 +15,8 @@
 import typer
 from typer.testing import CliRunner
 
-from gflow_cli import __version__, long_license
-from gflow_cli.info import license_info, version
+from gflow import __version__, long_license
+from gflow.cli.info import license_info, version
 
 runner = CliRunner()
 

@@ -19,7 +19,7 @@ from typing import Callable, Optional
 import typer
 from typer.testing import CliRunner
 
-from gflow_cli.constants import CONFIG_DIR, CONFIG_PATH
+from gflow.constants import CONFIG_DIR, CONFIG_PATH
 
 
 def save_text(text: str, filepath: str, mode: str = "w"):

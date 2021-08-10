@@ -11,14 +11,3 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-import typer
-
-from gflow_cli import credentials, datasets, info, projects, short_license
-
-app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
-
-app.add_typer(credentials.app, name="user")
-app.add_typer(info.app, name="info")
-app.add_typer(datasets.app, name="dataset")
-app.add_typer(projects.app, name="project")

@@ -11,19 +11,19 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from unittest.mock import MagicMock, patch
-
-from gflow.cli.credentials import login
-from gflow.utility import cli_test_runner
+from typer import Option
 
 
-@patch("gflow.credentials.keyring.set_password")
-@patch("gflow.credentials.requests.post")
-def test_login(mock_post, mock_save_pwd):
-    mock_response = mock_post.return_value = MagicMock()
-    mock_response.headers = {"x-auth-token": None}
-    mock_post.return_value.text = ""
+class Client:
+    def __init__(self, config: Option[dict] = None, token: Option[str] = None):
+        if config is None and token is None:
+            raise UserWarning("Both config and token can't be None")
 
-    result = cli_test_runner(login)(input="hello@abc.com\n12345\n")
+        if config:
+            token = config.get("token")
+        else:
+            config = {}
+        self.token = token
+        self.config = config
 
-    assert "Authentication successful" in result.stdout
+    def create_project(self, name:str, task_type: str,):pass
