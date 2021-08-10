@@ -1,5 +1,5 @@
 # CLI
-[![CodeFactor](https://www.codefactor.io/repository/github/gradsflow/cli/badge)](https://www.codefactor.io/repository/github/gradsflow/cli)
+[![CodeFactor](https://www.codefactor.io/repository/github/gradsflow/automl/badge)](https://www.codefactor.io/repository/github/gradsflow/automl)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/gradsflow/cli/main.svg)](https://results.pre-commit.ci/latest/github/gradsflow/cli/main)
 
 CLI for accessing GradsFlow Codeless AI Engine.
