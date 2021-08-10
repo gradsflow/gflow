@@ -49,4 +49,4 @@ test = [
 profile = "black"
 
 [tool.flit.scripts]
-gflow = "gflow.main:app"
+gflow = "gflow.cli.main:app"

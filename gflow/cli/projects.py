@@ -49,7 +49,6 @@ def add_project(
         return
 
     task_id = PROJECT_TYPES.get(project_type)
-    type_id = 1
     visibility = 1
     team_id = 4
 
@@ -57,7 +56,6 @@ def add_project(
         tittle=title,
         description=description,
         task_id=task_id,
-        type_id=type_id,
         visibility_id=visibility,
         team_id=team_id,
     )

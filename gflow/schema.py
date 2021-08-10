@@ -29,6 +29,6 @@ class ProjectModel(BaseBackendModel):
     tittle: str
     description: str
     task_id: int
-    type_id: int
+    type_id: int = 1
     visibility_id: int
     team_id: int

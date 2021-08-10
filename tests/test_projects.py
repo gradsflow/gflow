@@ -34,7 +34,7 @@ def test_add_project(mock_read_config: MagicMock, mock_post: MagicMock):
 
     app = typer.Typer()
     app.command()(add_project)
-    result = runner.invoke(app, input="title\ndesc\n")
+    result = runner.invoke(app, args=["--timeout", "5"], input="title\ndesc\nimage_classification")
 
     mock_read_config.assert_called_with()
     assert result.exit_code == 0
