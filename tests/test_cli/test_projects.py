@@ -14,14 +14,9 @@
 
 from unittest.mock import MagicMock, patch
 
-import typer
-from typer.testing import CliRunner
-
-from gflow.cli.projects import add_project
+from gflow.cli.main import projects
 from gflow.client import Client
-from gflow.utility import init_config
-
-runner = CliRunner()
+from gflow.utility import cli_test_runner, init_config
 
 init_config("fake", "fake")
 
@@ -29,10 +24,9 @@ init_config("fake", "fake")
 @patch("gflow.cli.projects.Client")
 @patch("gflow.cli.projects.read_config")
 def test_add_project(mock_read_config: MagicMock, mock_client):
-    app = typer.Typer()
-    app.command()(add_project)
+    runner = cli_test_runner(projects.add_project)
     task = Client.get_task_types()[0]
-    result = runner.invoke(app, args=["--timeout", "5"], input=f"title\ndesc\n{task}")
+    result = runner(args=["--timeout", "5"], input=f"title\ndesc\n{task}")
 
     mock_read_config.assert_called_with()
     assert result.exit_code == 0
