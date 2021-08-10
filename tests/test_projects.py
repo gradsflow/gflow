@@ -27,7 +27,7 @@ init_config("fake", "fake")
 
 @patch("gflow_cli.projects.requests")
 @patch("gflow_cli.projects.read_config")
-def test_add_project(mock_conf, mock_req):
+def test_add_project(mock_conf: MagicMock, mock_req: MagicMock):
     mock_conf.return_value = True
     mock_post = mock_req.post = MagicMock()
     mock_post.json = ""
@@ -37,4 +37,6 @@ def test_add_project(mock_conf, mock_req):
     app = typer.Typer()
     app.command()(add_project)
     result = runner.invoke(app, args=["--timeout", 5], input="title\ndesc\n")
-    assert result.stdout
+
+    mock_conf.assert_called_with()
+    assert "Enter" in result.stdout

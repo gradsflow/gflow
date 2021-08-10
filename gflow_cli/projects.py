@@ -31,7 +31,7 @@ def add_project(timeout: int = 60) -> None:
         typer.echo("Login first")
         return
     title = typer.prompt("Enter Project Name", type=str)
-    desc = typer.prompt("Enter Description")
+    desc = typer.prompt("Enter Description", type=str)
     task_id = 1
     type_id = 1
     visibility = 1
