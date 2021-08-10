@@ -29,7 +29,8 @@ requires = [
     "typer >= 0.3.2",
     "keyring >= 23.0.1",
     "requests",
-    "loguru >= 0.5.3"
+    "loguru >= 0.5.3",
+    "pydantic"
 ]
 description-file = "README.md"
 requires-python = ">=3.6"
