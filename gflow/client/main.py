@@ -35,19 +35,18 @@ class Client:
         self.headers = {"x-auth-token": self.token}
         logger.debug(f"header set->{self.headers}")
 
-
     def login(self, email: str, password: str):
         response = requests.post(USER_URL, data={"email": email, "password": password})
         return response
 
     def create_project(
-            self,
-            name: str,
-            description: str,
-            task_type: str,
-            visibility: str,
-            team_id: int,
-            timeout: int = 60,
+        self,
+        name: str,
+        description: str,
+        task_type: str,
+        visibility: str,
+        team_id: int,
+        timeout: int = 60,
     ):
         task_id = TASK_TYPE.get(task_type.lower())
         visibility_id = VISIBILITY_TYPE.get(visibility.lower())
