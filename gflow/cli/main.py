@@ -23,7 +23,7 @@
 import typer
 
 from gflow import short_license
-from gflow.cli import datasets, credentials, projects, info
+from gflow.cli import credentials, datasets, info, projects
 
 app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
 

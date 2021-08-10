@@ -11,6 +11,14 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import requests
 import typer
@@ -28,10 +36,12 @@ PROJECT_TYPES = dict(image_classification=1, text_classification=2)
 
 @app.command(name="create")
 def add_project(
-        title: str = typer.Option(..., prompt=True),
-        description: str = typer.Option(..., prompt=True),
-        project_type: str = typer.Option(..., prompt=True, help=f"One of the value from {PROJECT_TYPES}"),
-        timeout: int = 60,
+    title: str = typer.Option(..., prompt=True),
+    description: str = typer.Option(..., prompt=True),
+    project_type: str = typer.Option(
+        ..., prompt=True, help=f"One of the value from {PROJECT_TYPES}"
+    ),
+    timeout: int = 60,
 ) -> None:
     config: dict = read_config()
     if not config:

@@ -26,4 +26,9 @@ class Client:
         self.token = token
         self.config = config
 
-    def create_project(self, name:str, task_type: str,):pass
+    def create_project(
+        self,
+        name: str,
+        task_type: str,
+    ):
+        pass

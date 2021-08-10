@@ -22,8 +22,8 @@ clean:
 	rm -f .coverage
 
 style:
-	black gflow_cli tests
-	isort gflow_cli tests
+	black gflow tests
+	isort gflow tests
 
 dist: clean
 	flit build
