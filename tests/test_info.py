@@ -29,7 +29,7 @@ def test_version():
     assert __version__ in result.stdout
 
 
-def test_version():
+def test_license_info():
     app = typer.Typer()
     app.command()(license_info)
     result = runner.invoke(app)

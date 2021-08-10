@@ -30,7 +30,7 @@ def add_project(
     description: str = typer.Option(..., prompt=True),
     timeout: int = 60,
 ) -> None:
-    config = read_config()
+    config: dict = read_config()
     if not config:
         typer.echo("Login first")
         return
