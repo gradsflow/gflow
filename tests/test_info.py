@@ -12,16 +12,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
-from pathlib import Path
+import typer
+from typer.testing import CliRunner
 
-KEYRING_NAME = "GRADSFLOW_CLI"
-DEFAULT_ADDR = os.environ.get("DEFAULT_ADDR")
-BASE_URL = f"{DEFAULT_ADDR}/api"
+from gflow_cli import __version__, long_license
+from gflow_cli.info import license_info, version
 
-DATASETS_URL = f"{BASE_URL}/dataset"
-PROJECTS_URL = f"{BASE_URL}/project"
-USER_URL = f"{BASE_URL}/auth"
+runner = CliRunner()
 
-CONFIG_DIR = Path.home() / ".gradsflow"
-CONFIG_PATH = CONFIG_DIR / "config.json"
+
+def test_version():
+    app = typer.Typer()
+    app.command()(version)
+    result = runner.invoke(app)
+    assert result.exit_code == 0
+    assert __version__ in result.stdout
+
+
+def test_license_info():
+    app = typer.Typer()
+    app.command()(license_info)
+    result = runner.invoke(app)
+    assert result.exit_code == 0
+    assert long_license in result.stdout

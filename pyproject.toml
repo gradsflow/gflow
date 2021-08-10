@@ -26,9 +26,11 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
 ]
 requires = [
-    "typer",
+    "typer >= 0.3.2",
     "keyring >= 23.0.1",
-    "requests"
+    "requests",
+    "loguru >= 0.5.3",
+    "pydantic"
 ]
 description-file = "README.md"
 requires-python = ">=3.6"

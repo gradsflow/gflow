@@ -11,17 +11,24 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from pydantic import BaseModel
 
-import os
-from pathlib import Path
 
-KEYRING_NAME = "GRADSFLOW_CLI"
-DEFAULT_ADDR = os.environ.get("DEFAULT_ADDR")
-BASE_URL = f"{DEFAULT_ADDR}/api"
+def to_camel(string: str) -> str:
+    split_string = string.split("_")
+    return split_string[0] + "".join(word.capitalize() for word in split_string[1:])
 
-DATASETS_URL = f"{BASE_URL}/dataset"
-PROJECTS_URL = f"{BASE_URL}/project"
-USER_URL = f"{BASE_URL}/auth"
 
-CONFIG_DIR = Path.home() / ".gradsflow"
-CONFIG_PATH = CONFIG_DIR / "config.json"
+class BaseBackendModel(BaseModel):
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
+
+
+class ProjectModel(BaseBackendModel):
+    tittle: str
+    description: str
+    task_id: int
+    type_id: int
+    visibility_id: int
+    team_id: int

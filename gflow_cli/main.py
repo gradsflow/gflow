@@ -14,10 +14,11 @@
 
 import typer
 
-from gflow_cli import credentials, info, short_license
-from gflow_cli.codeless_ai import datasets
+from gflow_cli import credentials, datasets, info, projects, short_license
 
-app = typer.Typer(name="gflow_cli", help=short_license)
+app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
+
 app.add_typer(credentials.app, name="user")
 app.add_typer(info.app, name="info")
 app.add_typer(datasets.app, name="dataset")
+app.add_typer(projects.app, name="project")

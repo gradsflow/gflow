@@ -11,17 +11,17 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 import os
-from pathlib import Path
 
-KEYRING_NAME = "GRADSFLOW_CLI"
-DEFAULT_ADDR = os.environ.get("DEFAULT_ADDR")
-BASE_URL = f"{DEFAULT_ADDR}/api"
+from gflow_cli.utility import init_config, read_config, read_text_file, save_text
 
-DATASETS_URL = f"{BASE_URL}/dataset"
-PROJECTS_URL = f"{BASE_URL}/project"
-USER_URL = f"{BASE_URL}/auth"
 
-CONFIG_DIR = Path.home() / ".gradsflow"
-CONFIG_PATH = CONFIG_DIR / "config.json"
+def test_save_text():
+    save_text("hi", "./temp.txt")
+    assert os.path.exists("temp.txt")
+    assert read_text_file("temp.txt")
+
+
+def test_init_config():
+    init_config("hello@gflow.com", "1234")
+    assert read_config()
