@@ -12,28 +12,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import asdict, dataclass
-
-import requests
 import typer
 
-from gflow_cli.constants import DATASETS_URL
+from gflow import short_license
+from gflow.cli import credentials, datasets, info, projects
 
-app = typer.Typer(help="Manage your datasets with `gflow-cli datasets` command.")
+app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
 
-AVAILABLE_STORAGE = ("LOCAL", "REMOTE")
-AVAILABLE_TASKS = ("IMAGE-CLASSIFICATION",)
-AVAILABLE_DATASET_TYPES = ("FROM-FOLDER", "FROM-CSV")
-
-
-@dataclass
-class DatasetRequest:
-    path: str
-    task: str
-    dataset_type: str
-    remote: bool
-
-
-@app.command(name="available-tasks")
-def get_available_tasks() -> None:
-    typer.echo(AVAILABLE_TASKS)
+app.add_typer(credentials.app, name="user")
+app.add_typer(info.app, name="info")
+app.add_typer(datasets.app, name="dataset")
+app.add_typer(projects.app, name="project")

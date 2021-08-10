@@ -11,31 +11,44 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import requests
 import typer
 from loguru import logger
 
-from gflow_cli.constants import PROJECTS_URL
-from gflow_cli.utility import read_config
+from gflow.constants import PROJECTS_URL
+from gflow.utility import read_config
 
 app = typer.Typer(help="Manage your Projects with gflow-cli project command.")
 
-from gflow_cli.schema import ProjectModel
+from gflow.schema import ProjectModel
+
+PROJECT_TYPES = dict(image_classification=1, text_classification=2)
 
 
 @app.command(name="create")
 def add_project(
     title: str = typer.Option(..., prompt=True),
     description: str = typer.Option(..., prompt=True),
+    project_type: str = typer.Option(
+        ..., prompt=True, help=f"One of the value from {PROJECT_TYPES}"
+    ),
     timeout: int = 60,
 ) -> None:
     config: dict = read_config()
     if not config:
         typer.echo("Login first")
         return
-    task_id = 1
-    type_id = 1
+
+    task_id = PROJECT_TYPES.get(project_type)
     visibility = 1
     team_id = 4
 
@@ -43,7 +56,6 @@ def add_project(
         tittle=title,
         description=description,
         task_id=task_id,
-        type_id=type_id,
         visibility_id=visibility,
         team_id=team_id,
     )

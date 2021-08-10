@@ -11,17 +11,3 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-import typer
-from typer.testing import CliRunner
-
-from gflow_cli.datasets import get_available_tasks
-
-runner = CliRunner()
-
-
-def test_add_project():
-    app = typer.Typer()
-    app.command()(get_available_tasks)
-    result = runner.invoke(app)
-    assert result.exit_code == 0

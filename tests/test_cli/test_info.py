@@ -12,29 +12,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from unittest.mock import MagicMock, patch
-
 import typer
 from typer.testing import CliRunner
 
-from gflow_cli.projects import add_project
-from gflow_cli.utility import init_config
+from gflow import __version__, long_license
+from gflow.cli.info import license_info, version
 
 runner = CliRunner()
 
-init_config("fake", "fake")
 
-
-@patch("gflow_cli.projects.requests.post")
-@patch("gflow_cli.projects.read_config")
-def test_add_project(mock_read_config: MagicMock, mock_post: MagicMock):
-    mock_response = mock_post.return_value = MagicMock()
-    mock_response.return_value = False
-    mock_response.text = ""
-
+def test_version():
     app = typer.Typer()
-    app.command()(add_project)
-    result = runner.invoke(app, input="title\ndesc\n")
-
-    mock_read_config.assert_called_with()
+    app.command()(version)
+    result = runner.invoke(app)
     assert result.exit_code == 0
+    assert __version__ in result.stdout
+
+
+def test_license_info():
+    app = typer.Typer()
+    app.command()(license_info)
+    result = runner.invoke(app)
+    assert result.exit_code == 0
+    assert long_license in result.stdout

@@ -3,7 +3,7 @@ requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
-module = "gflow_cli"
+module = "gflow"
 author = "GradsFlow"
 author-email = "hello@gradsflow.com"
 home-page = "https://github.com/gradsflow/cli"
@@ -30,7 +30,8 @@ requires = [
     "keyring >= 23.0.1",
     "requests",
     "loguru >= 0.5.3",
-    "pydantic"
+    "pydantic",
+    "prettytable"
 ]
 description-file = "README.md"
 requires-python = ">=3.6"
@@ -48,4 +49,4 @@ test = [
 profile = "black"
 
 [tool.flit.scripts]
-gflow = "gflow_cli.main:app"
+gflow = "gflow.cli.main:app"

@@ -13,7 +13,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 
-from gflow_cli.utility import init_config, read_config, read_text_file, save_text
+from gflow.utility import init_config, read_config, read_text_file, save_text
 
 
 def test_save_text():

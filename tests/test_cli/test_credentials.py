@@ -11,14 +11,19 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from unittest.mock import MagicMock, patch
 
-import typer
+from gflow.cli.credentials import login
+from gflow.utility import cli_test_runner
 
-from gflow_cli import credentials, datasets, info, projects, short_license
 
-app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
+@patch("gflow.cli.credentials.keyring.set_password")
+@patch("gflow.cli.credentials.requests.post")
+def test_login(mock_post, mock_save_pwd):
+    mock_response = mock_post.return_value = MagicMock()
+    mock_response.headers = {"x-auth-token": None}
+    mock_post.return_value.text = ""
 
-app.add_typer(credentials.app, name="user")
-app.add_typer(info.app, name="info")
-app.add_typer(datasets.app, name="dataset")
-app.add_typer(projects.app, name="project")
+    result = cli_test_runner(login)(input="hello@abc.com\n12345\n")
+
+    assert "Authentication successful" in result.stdout
