@@ -12,8 +12,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import asdict
-
 import requests
 import typer
 from loguru import logger
@@ -27,7 +25,7 @@ from gflow_cli.schema import ProjectModel
 
 
 @app.command(name="add")
-def add_project() -> None:
+def add_project(timeout: int = 60) -> None:
     config = read_config()
     if not config:
         typer.echo("Login first")
@@ -51,7 +49,10 @@ def add_project() -> None:
     headers = {"x-auth-token": config["token"]}
     typer.echo(data.dict(by_alias=True))
     response = requests.post(
-        PROJECTS_URL + "/create", data=data.dict(by_alias=True), headers=headers
+        PROJECTS_URL + "/create",
+        data=data.dict(by_alias=True),
+        headers=headers,
+        timeout=timeout,
     )
     if response:
         typer.secho("✅ Project Created", color=typer.colors.GREEN)

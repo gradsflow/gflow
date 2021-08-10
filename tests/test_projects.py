@@ -11,17 +11,30 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-import os
 
-from gflow_cli.utility import init_config, read_config, read_text_file, save_text
+from unittest.mock import patch, MagicMock
+
+import typer
+from typer.testing import CliRunner
+
+from gflow_cli.projects import add_project
+from gflow_cli.utility import init_config
+
+runner = CliRunner()
+
+init_config("fake", "fake")
 
 
-def test_save_text():
-    save_text("hi", "./temp.txt")
-    assert os.path.exists("temp.txt")
-    assert read_text_file("temp.txt")
+@patch("gflow_cli.projects.requests")
+@patch("gflow_cli.projects.read_config")
+def test_add_project(mock_conf, mock_req):
+    mock_conf.return_value = True
+    mock_post = mock_req.post = MagicMock()
+    mock_post.json = ""
+    mock_post.text = ""
+    mock_post.return_value = True
 
-
-def test_init_config():
-    init_config("hello@gflow.com", "1234")
-    assert read_config()
+    app = typer.Typer()
+    app.command()(add_project)
+    result = runner.invoke(app, args=["--timeout", 5], input="title\ndesc\n")
+    assert result.stdout
