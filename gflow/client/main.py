@@ -35,9 +35,12 @@ class Client:
         self.headers = {"x-auth-token": self.token}
         logger.debug(f"header set->{self.headers}")
 
-    def login(self, email: str, password: str):
+    @staticmethod
+    def login(email: str, password: str):
         response = requests.post(USER_URL, data={"email": email, "password": password})
-        return response
+        token = response.headers["x-auth-token"]
+        client = Client(token=token)
+        return client, response
 
     def create_project(
         self,

@@ -18,11 +18,11 @@ from gflow.utility import cli_test_runner
 
 
 @patch("gflow.cli.credentials.keyring.set_password")
-@patch("gflow.cli.credentials.requests.post")
-def test_login(mock_post, mock_save_pwd):
-    mock_response = mock_post.return_value = MagicMock()
-    mock_response.headers = {"x-auth-token": None}
-    mock_post.return_value.text = ""
+@patch("gflow.cli.credentials.Client.login")
+def test_login(mock_login, mock_save_pwd):
+    mock_client, mock_response = mock_login.return_value = MagicMock(), MagicMock()
+    mock_client.token = "dummy"
+    mock_response.return_value.text = ""
 
     result = cli_test_runner(login)(input="hello@abc.com\n12345\n")
 

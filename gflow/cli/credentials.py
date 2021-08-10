@@ -13,10 +13,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import keyring
-import requests
 import typer
 
-from gflow.constants import KEYRING_NAME, USER_URL
+from gflow.client import Client
+from gflow.constants import KEYRING_NAME
 from gflow.utility import init_config
 
 app = typer.Typer()
@@ -27,10 +27,10 @@ def login(
     email: str = typer.Option(..., prompt=True),
     password: str = typer.Option(..., prompt=True, hide_input=True),
 ):
-    response = requests.post(USER_URL, data={"email": email, "password": password})
+    client, response = Client.login(email=email, password=password)
     if response:
         keyring.set_password(KEYRING_NAME, email, password)
-        token = response.headers["x-auth-token"]
+        token = client.token
         init_config(email, token)
         typer.secho(f"Authentication successful {email} 🔐", fg=typer.colors.GREEN)
     else:
