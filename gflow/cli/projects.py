@@ -28,15 +28,18 @@ from gflow.utility import read_config
 
 app = typer.Typer(help="Manage your Projects with gflow-cli project command.")
 
-PROJECT_TYPES = dict(image_classification=1, text_classification=2)
+TASK_TYPES = dict(image_classification=1, text_classification=2)
 
 
 @app.command(name="create")
 def add_project(
     title: str = typer.Option(..., prompt=True),
     description: str = typer.Option(..., prompt=True),
-    project_type: str = typer.Option(
-        ..., prompt=True, help=f"One of the value from {PROJECT_TYPES}"
+    task_type: str = typer.Option(
+        ...,
+        prompt=True,
+        help=f"One of the value from {TASK_TYPES}",
+        autocompletion=Client.get_task_types,
     ),
     timeout: int = 60,
 ) -> None:
@@ -53,7 +56,7 @@ def add_project(
     response = client.create_project(
         name=title,
         description=description,
-        task_type=project_type,
+        task_type=task_type,
         visibility=visibility,
         team_id=team_id,
         timeout=timeout,

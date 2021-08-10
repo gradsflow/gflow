@@ -31,6 +31,7 @@ class Client:
             config = {}
         self.token = token
         self.config = config
+        self.headers = {"x-auth-token": self.token}
 
     def login(self, email: str, password: str):
         response = requests.post(USER_URL, data={"email": email, "password": password})
@@ -61,7 +62,7 @@ class Client:
             visibility_id=visibility_id,
             team_id=team_id,
         )
-        headers = {"x-auth-token": self.token}
+        headers = self.headers
 
         response = requests.post(
             PROJECTS_URL + "/create",

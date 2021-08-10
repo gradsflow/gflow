@@ -18,6 +18,7 @@ import typer
 from typer.testing import CliRunner
 
 from gflow.cli.projects import add_project
+from gflow.client import Client
 from gflow.utility import init_config
 
 runner = CliRunner()
@@ -25,18 +26,13 @@ runner = CliRunner()
 init_config("fake", "fake")
 
 
-@patch("gflow.cli.projects.requests.post")
+@patch("gflow.cli.projects.Client")
 @patch("gflow.cli.projects.read_config")
-def test_add_project(mock_read_config: MagicMock, mock_post: MagicMock):
-    mock_response = mock_post.return_value = MagicMock()
-    mock_response.return_value = False
-    mock_response.text = ""
-
+def test_add_project(mock_read_config: MagicMock, mock_client):
     app = typer.Typer()
     app.command()(add_project)
-    result = runner.invoke(
-        app, args=["--timeout", "5"], input="title\ndesc\nimage_classification"
-    )
+    task = Client.get_task_types()[0]
+    result = runner.invoke(app, args=["--timeout", "5"], input=f"title\ndesc\n{task}")
 
     mock_read_config.assert_called_with()
     assert result.exit_code == 0
