@@ -15,11 +15,10 @@
 import typer
 
 from gflow import short_license
-from gflow.cli import credentials, datasets, info, projects
+from gflow.cli import credentials, info, projects
 
 app = typer.Typer(name="gflow_cli", help=short_license, add_completion=False)
 
 app.add_typer(credentials.app, name="user")
 app.add_typer(info.app, name="info")
-app.add_typer(datasets.app, name="dataset")
 app.add_typer(projects.app, name="project")

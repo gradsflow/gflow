@@ -14,7 +14,7 @@
 import json
 import os
 from functools import partial
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 
 import typer
 from typer.testing import CliRunner
@@ -46,6 +46,12 @@ def read_config() -> Optional[dict]:
         return None
     data = json.loads(read_text_file(CONFIG_PATH))
     return data
+
+
+def append_config(key: Any, value: Any):
+    config = read_config()
+    config[key] = value
+    save_text(json.dumps(config), CONFIG_PATH)
 
 
 def cli_test_runner(cli_function: Callable):

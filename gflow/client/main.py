@@ -11,18 +11,18 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from typing import Optional
+
 import requests
-from gflow_cli.constants import USER_URL
-from typer import Option
+from loguru import logger
 
-from gflow.constants import PROJECTS_URL
+from gflow.constants import PROJECTS_URL, USER_URL
+from gflow.mapping import TASK_TYPE, VISIBILITY_TYPE
 from gflow.schema import ProjectModel
-
-TASK_TYPE = dict(image_classification=1, text_clf=2)
 
 
 class Client:
-    def __init__(self, config: Option[dict] = None, token: Option[str] = None):
+    def __init__(self, config: Optional[dict] = None, token: Optional[str] = None):
         if config is None and token is None:
             raise UserWarning("Both config and token can't be None")
 
@@ -32,22 +32,33 @@ class Client:
             config = {}
         self.token = token
         self.config = config
+        self.headers = {"x-auth-token": self.token}
+        logger.debug(f"header set->{self.headers}")
 
-    def login(self, email: str, password: str):
+    @staticmethod
+    def login(email: str, password: str):
         response = requests.post(USER_URL, data={"email": email, "password": password})
-        return response
+        token = response.headers["x-auth-token"]
+        client = Client(token=token)
+        return client, response
 
     def create_project(
         self,
         name: str,
         description: str,
         task_type: str,
-        visibility_type: str,
+        visibility: str,
         team_id: int,
         timeout: int = 60,
     ):
-        task_id = TASK_TYPE.get(task_type)
-        visibility_id = TASK_TYPE.get(visibility_type)
+        task_id = TASK_TYPE.get(task_type.lower())
+        visibility_id = VISIBILITY_TYPE.get(visibility.lower())
+
+        if not visibility_id:
+            raise UserWarning(f"Invalid visibility type - {visibility}")
+
+        if not task_id:
+            raise UserWarning(f"Invalid task type - {task_type}")
 
         data = ProjectModel(
             tittle=name,
@@ -56,7 +67,7 @@ class Client:
             visibility_id=visibility_id,
             team_id=team_id,
         )
-        headers = {"x-auth-token": self.token}
+        headers = self.headers
 
         response = requests.post(
             PROJECTS_URL + "/create",
@@ -65,3 +76,11 @@ class Client:
             timeout=timeout,
         )
         return response
+
+    @staticmethod
+    def get_task_types():
+        return list(TASK_TYPE.keys())
+
+    @staticmethod
+    def get_visibility():
+        return list(VISIBILITY_TYPE.keys())

@@ -7,3 +7,9 @@ example:
 
 test:
 - tests/**/*
+
+cli:
+- gflow/cli/**/*
+
+client:
+- gflow/client/**/*

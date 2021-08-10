@@ -13,7 +13,13 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 
-from gflow.utility import init_config, read_config, read_text_file, save_text
+from gflow.utility import (
+    append_config,
+    init_config,
+    read_config,
+    read_text_file,
+    save_text,
+)
 
 
 def test_save_text():
@@ -25,3 +31,9 @@ def test_save_text():
 def test_init_config():
     init_config("hello@gflow.com", "1234")
     assert read_config()
+
+
+def test_append_config():
+    append_config("key1", 1)
+    config = read_config()
+    assert config["key1"] == 1

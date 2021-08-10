@@ -1,8 +1,8 @@
-site_name: GradsFlow CLI
+site_name: GradsFlow AutoML
 site_description: "GradsFlow Codeless Machine Learning"
 banner_url: https://ik.imagekit.io/gradsflow/logo/logo_sA2Al0_Ph6Cc.png
-repo_url: https://github.com/gradsflow/cli/
-repo_name: gradsflow/cli
+repo_url: https://github.com/gradsflow/automl/
+repo_name: gradsflow/automl
 
 theme:
   name: material
@@ -40,7 +40,7 @@ plugins:
   - search
 
 extra:
-  homepage: https://gradsflow-cli.readthedocs.io/en/latest
+  homepage: https://automl.gradsflow.com/en/latest/
 
 nav:
   - Introduction: 'index.md'

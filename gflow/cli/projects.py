@@ -20,26 +20,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import requests
 import typer
 from loguru import logger
 
-from gflow.constants import PROJECTS_URL
+from gflow.client import Client
 from gflow.utility import read_config
 
 app = typer.Typer(help="Manage your Projects with gflow-cli project command.")
 
-from gflow.schema import ProjectModel
-
-PROJECT_TYPES = dict(image_classification=1, text_classification=2)
+TASK_TYPES = dict(image_classification=1, text_classification=2)
 
 
 @app.command(name="create")
 def add_project(
     title: str = typer.Option(..., prompt=True),
     description: str = typer.Option(..., prompt=True),
-    project_type: str = typer.Option(
-        ..., prompt=True, help=f"One of the value from {PROJECT_TYPES}"
+    task_type: str = typer.Option(
+        ...,
+        prompt=True,
+        help=f"One of the value from {TASK_TYPES}",
+        autocompletion=Client.get_task_types,
     ),
     timeout: int = 60,
 ) -> None:
@@ -48,26 +48,20 @@ def add_project(
         typer.echo("Login first")
         return
 
-    task_id = PROJECT_TYPES.get(project_type)
-    visibility = 1
+    client = Client(config)
+
+    visibility = "public"
     team_id = 4
 
-    data = ProjectModel(
-        tittle=title,
+    response = client.create_project(
+        name=title,
         description=description,
-        task_id=task_id,
-        visibility_id=visibility,
+        task_type=task_type,
+        visibility=visibility,
         team_id=team_id,
-    )
-    typer.echo("project url is " + PROJECTS_URL)
-    headers = {"x-auth-token": config["token"]}
-    typer.echo(data.dict(by_alias=True))
-    response = requests.post(
-        PROJECTS_URL + "/create",
-        data=data.dict(by_alias=True),
-        headers=headers,
         timeout=timeout,
     )
+
     if response:
         typer.secho("✅ Project Created", color=typer.colors.GREEN)
         logger.debug(response.json())

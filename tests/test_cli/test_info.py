@@ -12,26 +12,18 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import typer
-from typer.testing import CliRunner
-
 from gflow import __version__, long_license
 from gflow.cli.info import license_info, version
-
-runner = CliRunner()
+from gflow.utility import cli_test_runner
 
 
 def test_version():
-    app = typer.Typer()
-    app.command()(version)
-    result = runner.invoke(app)
+    result = cli_test_runner(version)()
     assert result.exit_code == 0
     assert __version__ in result.stdout
 
 
 def test_license_info():
-    app = typer.Typer()
-    app.command()(license_info)
-    result = runner.invoke(app)
+    result = cli_test_runner(license_info)()
     assert result.exit_code == 0
     assert long_license in result.stdout
