@@ -25,8 +25,8 @@ runner = CliRunner()
 init_config("fake", "fake")
 
 
-@patch("gflow.projects.requests.post")
-@patch("gflow.projects.read_config")
+@patch("gflow.cli.projects.requests.post")
+@patch("gflow.cli.projects.read_config")
 def test_add_project(mock_read_config: MagicMock, mock_post: MagicMock):
     mock_response = mock_post.return_value = MagicMock()
     mock_response.return_value = False

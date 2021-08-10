@@ -17,8 +17,8 @@ from gflow.cli.credentials import login
 from gflow.utility import cli_test_runner
 
 
-@patch("gflow.credentials.keyring.set_password")
-@patch("gflow.credentials.requests.post")
+@patch("gflow.cli.credentials.keyring.set_password")
+@patch("gflow.cli.credentials.requests.post")
 def test_login(mock_post, mock_save_pwd):
     mock_response = mock_post.return_value = MagicMock()
     mock_response.headers = {"x-auth-token": None}
