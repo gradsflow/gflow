@@ -12,28 +12,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import asdict, dataclass
-
-import requests
 import typer
+from typer.testing import CliRunner
 
-from gflow_cli.constants import DATASETS_URL
+from gflow_cli import __version__, long_license
+from gflow_cli.info import license_info, version
 
-app = typer.Typer(help="Manage your datasets with `gflow-cli datasets` command.")
-
-AVAILABLE_STORAGE = ("LOCAL", "REMOTE")
-AVAILABLE_TASKS = ("IMAGE-CLASSIFICATION",)
-AVAILABLE_DATASET_TYPES = ("FROM-FOLDER", "FROM-CSV")
+runner = CliRunner()
 
 
-@dataclass
-class DatasetRequest:
-    path: str
-    task: str
-    dataset_type: str
-    remote: bool
+def test_version():
+    app = typer.Typer()
+    app.command()(version)
+    result = runner.invoke(app)
+    assert result.exit_code == 0
+    assert __version__ in result.stdout
 
 
-@app.command(name="available-tasks")
-def get_available_tasks() -> None:
-    typer.echo(AVAILABLE_TASKS)
+def test_license_info():
+    app = typer.Typer()
+    app.command()(license_info)
+    result = runner.invoke(app)
+    assert result.exit_code == 0
+    assert long_license in result.stdout

@@ -13,9 +13,11 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
 import os
-from typing import Optional
+from functools import partial
+from typing import Callable, Optional
 
 import typer
+from typer.testing import CliRunner
 
 from gflow_cli.constants import CONFIG_DIR, CONFIG_PATH
 
@@ -44,3 +46,10 @@ def read_config() -> Optional[dict]:
         return None
     data = json.loads(read_text_file(CONFIG_PATH))
     return data
+
+
+def cli_test_runner(cli_function: Callable):
+    runner = CliRunner()
+    app = typer.Typer()
+    app.command()(cli_function)
+    return partial(runner.invoke, app=app)

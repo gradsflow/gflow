@@ -12,8 +12,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import asdict
-
 import requests
 import typer
 from loguru import logger
@@ -26,14 +24,16 @@ app = typer.Typer(help="Manage your Projects with gflow-cli project command.")
 from gflow_cli.schema import ProjectModel
 
 
-@app.command(name="add")
-def add_project() -> None:
-    config = read_config()
+@app.command(name="create")
+def add_project(
+    title: str = typer.Option(..., prompt=True),
+    description: str = typer.Option(..., prompt=True),
+    timeout: int = 60,
+) -> None:
+    config: dict = read_config()
     if not config:
         typer.echo("Login first")
         return
-    title = typer.prompt("Enter Project Name", type=str)
-    desc = typer.prompt("Enter Description")
     task_id = 1
     type_id = 1
     visibility = 1
@@ -41,7 +41,7 @@ def add_project() -> None:
 
     data = ProjectModel(
         tittle=title,
-        description=desc,
+        description=description,
         task_id=task_id,
         type_id=type_id,
         visibility_id=visibility,
@@ -51,7 +51,10 @@ def add_project() -> None:
     headers = {"x-auth-token": config["token"]}
     typer.echo(data.dict(by_alias=True))
     response = requests.post(
-        PROJECTS_URL + "/create", data=data.dict(by_alias=True), headers=headers
+        PROJECTS_URL + "/create",
+        data=data.dict(by_alias=True),
+        headers=headers,
+        timeout=timeout,
     )
     if response:
         typer.secho("✅ Project Created", color=typer.colors.GREEN)
