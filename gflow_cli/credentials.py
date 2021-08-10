@@ -23,10 +23,10 @@ app = typer.Typer()
 
 
 @app.command()
-def login():
-    email: str = typer.prompt("Enter Registered Email")
-    password: str = typer.prompt("Enter Password", hide_input=True)
-
+def login(
+    email: str = typer.Option(..., prompt=True),
+    password: str = typer.Option(..., prompt=True, hide_input=True),
+):
     response = requests.post(USER_URL, data={"email": email, "password": password})
     if response:
         keyring.set_password(KEYRING_NAME, email, password)

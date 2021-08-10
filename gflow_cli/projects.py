@@ -24,14 +24,16 @@ app = typer.Typer(help="Manage your Projects with gflow-cli project command.")
 from gflow_cli.schema import ProjectModel
 
 
-@app.command(name="add")
-def add_project(timeout: int = 60) -> None:
+@app.command(name="create")
+def add_project(
+    title: str = typer.Option(..., prompt=True),
+    description: str = typer.Option(..., prompt=True),
+    timeout: int = 60,
+) -> None:
     config = read_config()
     if not config:
         typer.echo("Login first")
         return
-    title = typer.prompt("Enter Project Name", type=str)
-    desc = typer.prompt("Enter Description", type=str)
     task_id = 1
     type_id = 1
     visibility = 1
@@ -39,7 +41,7 @@ def add_project(timeout: int = 60) -> None:
 
     data = ProjectModel(
         tittle=title,
-        description=desc,
+        description=description,
         task_id=task_id,
         type_id=type_id,
         visibility_id=visibility,

@@ -12,7 +12,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import typer
 from typer.testing import CliRunner
