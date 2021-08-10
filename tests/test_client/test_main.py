@@ -14,29 +14,26 @@
 
 from unittest.mock import MagicMock, patch
 
-import typer
-from typer.testing import CliRunner
-
-from gflow.cli.projects import add_project
-from gflow.utility import init_config
-
-runner = CliRunner()
-
-init_config("fake", "fake")
+from gflow.client.main import Client
 
 
-@patch("gflow.cli.projects.requests.post")
-@patch("gflow.cli.projects.read_config")
-def test_add_project(mock_read_config: MagicMock, mock_post: MagicMock):
+@patch("gflow.client.main.requests.post")
+def test_create_project(mock_post: MagicMock):
+    client = Client(token="fake")
+
     mock_response = mock_post.return_value = MagicMock()
     mock_response.return_value = False
     mock_response.text = ""
 
-    app = typer.Typer()
-    app.command()(add_project)
-    result = runner.invoke(
-        app, args=["--timeout", "5"], input="title\ndesc\nimage_classification"
-    )
+    task_types = Client.get_task_types()
+    visibility = Client.get_visibility()[0]
 
-    mock_read_config.assert_called_with()
-    assert result.exit_code == 0
+    response = client.create_project(
+        name="hello",
+        description="",
+        task_type=task_types[0],
+        visibility=visibility,
+        team_id=1,
+        timeout=10,
+    )
+    assert response
