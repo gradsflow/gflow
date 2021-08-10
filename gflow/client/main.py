@@ -14,6 +14,7 @@
 from typing import Optional
 
 import requests
+from loguru import logger
 
 from gflow.constants import PROJECTS_URL, USER_URL
 from gflow.mapping import TASK_TYPE, VISIBILITY_TYPE
@@ -32,19 +33,21 @@ class Client:
         self.token = token
         self.config = config
         self.headers = {"x-auth-token": self.token}
+        logger.debug(f"header set->{self.headers}")
+
 
     def login(self, email: str, password: str):
         response = requests.post(USER_URL, data={"email": email, "password": password})
         return response
 
     def create_project(
-        self,
-        name: str,
-        description: str,
-        task_type: str,
-        visibility: str,
-        team_id: int,
-        timeout: int = 60,
+            self,
+            name: str,
+            description: str,
+            task_type: str,
+            visibility: str,
+            team_id: int,
+            timeout: int = 60,
     ):
         task_id = TASK_TYPE.get(task_type.lower())
         visibility_id = VISIBILITY_TYPE.get(visibility.lower())
@@ -52,7 +55,7 @@ class Client:
         if not visibility_id:
             raise UserWarning(f"Invalid visibility type - {visibility}")
 
-        if not task_type:
+        if not task_id:
             raise UserWarning(f"Invalid task type - {task_type}")
 
         data = ProjectModel(
