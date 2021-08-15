@@ -26,6 +26,13 @@ pip install .
 
 ## 🧑‍💻 Usage
 
+### Setup
+
+Before using the Python Client/CLI you have to set an enviornment variable
+`export DEFAULT_ADDR=http://IP:PORT`
+
+For example, if IP=127.0.0.0 and PORT=8080 then set `export DEFAULT_ADDR=http://127.0.0.0:8080`
+
 ### Manage Datasets
 
 #### Add Dataset
