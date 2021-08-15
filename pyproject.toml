@@ -6,7 +6,7 @@ build-backend = "flit_core.buildapi"
 module = "gflow"
 author = "GradsFlow"
 author-email = "hello@gradsflow.com"
-home-page = "https://github.com/gradsflow/cli"
+home-page = "https://github.com/gradsflow/gflow"
 classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Libraries",
@@ -24,10 +24,10 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
 ]
 requires = [
     "typer >= 0.3.2",
-    "keyring >= 23.0.1",
     "requests",
     "loguru >= 0.5.3",
     "pydantic",
@@ -37,7 +37,7 @@ description-file = "README.md"
 requires-python = ">=3.6"
 
 [tool.flit.metadata.urls]
-Documentation = "https://github.com/gradsflow/automl"
+Documentation = "https://docs.gradsflow.com/"
 
 [tool.flit.metadata.requires-extra]
 test = [

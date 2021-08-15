@@ -12,11 +12,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import keyring
 import typer
 
 from gflow.client import Client
-from gflow.constants import KEYRING_NAME
 from gflow.utility import init_config
 
 app = typer.Typer()
@@ -24,12 +22,11 @@ app = typer.Typer()
 
 @app.command()
 def login(
-    email: str = typer.Option(..., prompt=True),
-    password: str = typer.Option(..., prompt=True, hide_input=True),
+        email: str = typer.Option(..., prompt=True),
+        password: str = typer.Option(..., prompt=True, hide_input=True),
 ):
     client, response = Client.login(email=email, password=password)
     if response:
-        keyring.set_password(KEYRING_NAME, email, password)
         token = client.token
         init_config(email, token)
         typer.secho(f"Authentication successful {email} 🔐", fg=typer.colors.GREEN)
